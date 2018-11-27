@@ -30,7 +30,7 @@ CRGB leds[NUM_LEDS];
 153,   255,  255,  255,   //white
 255,   255, 0, 0 }; //red*/
 
-byte weather_unknown[] = {
+byte weather_unknown[] = { // 0x8142241818244281
   0b10000001,
   0b01000010,
   0b00100100,
@@ -39,7 +39,7 @@ byte weather_unknown[] = {
   0b00100100,
   0b01000010,
   0b10000001};
-byte weather_clear[] = {
+byte weather_clear[] = { // 0x9142183dbc184289
   0b10010001,
   0b01000010,
   0b00011000,
@@ -48,16 +48,25 @@ byte weather_clear[] = {
   0b00011000,
   0b01000010,
   0b10001001};
-byte weather_few[] = {
-  0b00010000,
-  0b01010100,
-  0b00111000,
-  0b11111110,
-  0b01000100,
-  0b10000010,
+byte weather_few[] = { // 0x7e8191718ea0c0f0
+  0b00001111,
+  0b00000011,
+  0b00000101,
+  0b01110001,
+  0b10001110,
+  0b10001001,
   0b10000001,
   0b01111110};
-byte weather_sct[] = {
+byte weather_sct[] = { // 0x7e8191718ea0c0f0
+  0b00001111,
+  0b00000011,
+  0b00000101,
+  0b01110001,
+  0b10001110,
+  0b10001001,
+  0b10000001,
+  0b01111110};
+byte weather_bkn[] = { // 0x00007e818999710e
   0b01110000,
   0b10001110,
   0b10011001,
@@ -66,16 +75,7 @@ byte weather_sct[] = {
   0b01111110,
   0b00000000,
   0b00000000};
-byte weather_bkn[] = {
-  0b01110000,
-  0b10001110,
-  0b10011001,
-  0b10010001,
-  0b10000001,
-  0b01111110,
-  0b00000000,
-  0b00000000};
-byte weather_shower[] = {
+byte weather_shower[] = { // 0x152a7e818191710e
   0b01110000,
   0b10001110,
   0b10001001,
@@ -84,7 +84,7 @@ byte weather_shower[] = {
   0b01111110,
   0b01010100,
   0b10101000};
-byte weather_rain[] = {
+byte weather_rain[] = { // 0x55aa55aa55aa55aa
   0b01010101,
   0b10101010,
   0b01010101,
@@ -93,7 +93,7 @@ byte weather_rain[] = {
   0b10101010,
   0b01010101,
   0b101010100};
-byte weather_thunderstorm[] = {
+byte weather_thunderstorm[] = { // 0x0a04087e8191710e
   0b01110000,
   0b10001110,
   0b10001001,
@@ -102,7 +102,7 @@ byte weather_thunderstorm[] = {
   0b00010000,
   0b00100000,
   0b01010000};
-byte weather_snow[] = {
+byte weather_snow[] = { // 0xa542a51818a542a5
   0b10100101,
   0b01000010,
   0b10100101,
@@ -111,7 +111,7 @@ byte weather_snow[] = {
   0b10100101,
   0b01000010,
   0b10100101};
-byte weather_mist[] = {
+byte weather_mist[] = { // 0x00ff00ff00ff00ff
   0b11111111,
   0b00000000,
   0b11111111,
