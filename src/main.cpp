@@ -94,16 +94,16 @@ CRGB getColor(float highTemp) {
     uint8_t colorIndex = ((highTemp - 40) / 50) * 255;
     color = ColorFromPalette(temp_palette, colorIndex);
   }*/
-  else if (highTemp <= 45) color = 0x2A2AFF;
-  else if (highTemp <= 50) color = 0x5555FF;
-  else if (highTemp <= 55) color = 0x7F7FFF;
-  else if (highTemp <= 60) color = 0xAAAAFF;
-  else if (highTemp <= 65) color = 0xD4D4FF;
-  else if (highTemp <= 70) color = 0xFFFFFF;
-  else if (highTemp <= 75) color = 0xFFCCCC;
-  else if (highTemp <= 80) color = 0xFF9999;
-  else if (highTemp <= 85) color = 0xFF6666;
-  else if (highTemp <= 90) color = 0xFF3333;
+  else if (highTemp <= 50) color = 0x2A2AFF;
+  else if (highTemp <= 55) color = 0x5555FF;
+  else if (highTemp <= 60) color = 0x7F7FFF;
+  else if (highTemp <= 65) color = 0xAAAAFF;
+  else if (highTemp <= 70) color = 0xD4D4FF;
+  else if (highTemp <= 75) color = 0xFFFFFF;
+  else if (highTemp <= 80) color = 0xFFCCCC;
+  else if (highTemp <= 85) color = 0xFF9999;
+  else if (highTemp <= 90) color = 0xFF6666;
+  else if (highTemp <= 95) color = 0xFF3333;
   else color = 0xFF0000;
   return color;
 }
