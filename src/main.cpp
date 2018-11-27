@@ -30,6 +30,8 @@ CRGB leds[NUM_LEDS];
 153,   255,  255,  255,   //white
 255,   255, 0, 0 }; //red*/
 
+// icons from https://github.com/caternuson/rpi-weather/blob/master/led8x8icons.py
+// 8x8 icon editor https://xantorohara.github.io/led-matrix-editor/
 byte weather_unknown[] = { // 0x8142241818244281
   0b10000001,
   0b01000010,
@@ -127,9 +129,6 @@ String conditions;
 #define HOST "api.weather.gov"
 #define ALAMEDA_URI "/gridpoints/MTR/94,125/forecast"
 #define SF_URI "/gridpoints/MTR/88,126/forecast"
-
-//const String alameda_url = "http://api.openweathermap.org/data/2.5/forecast?q=Alameda,US&units=imperial&APPID=3e305c0baa0f96824fe116e828f6d292";
-//const String sf_url = "http://api.openweathermap.org/data/2.5/forecast?q=San%20Francisco,US&units=imperial&APPID=3e305c0baa0f96824fe116e828f6d292";
 
 unsigned int loop_number = 0;
 
