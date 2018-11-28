@@ -94,7 +94,7 @@ byte weather_rain[] = { // 0x55aa55aa55aa55aa
   0b01010101,
   0b10101010,
   0b01010101,
-  0b101010100};
+  0b10101010};
 byte weather_thunderstorm[] = { // 0x0a04087e8191710e
   0b01110000,
   0b10001110,
