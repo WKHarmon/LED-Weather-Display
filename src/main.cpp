@@ -19,7 +19,7 @@ const char pass[] = "EDITME";    // your network password (use for WPA, or use a
 #define COLOR_ORDER RGB
 #define MAX_BRIGHTNESS 20
 #define MIN_BRIGHTNESS 3
-#define MIN_LUX 5 // not really lux, we're using a raw sensor reading, maybe 15
+#define MIN_LUX 8 // not really lux, we're using a raw sensor reading, maybe 15
 #define MAX_LUX 250
 #define NUM_LEDS 128
 CRGB leds[NUM_LEDS];
@@ -165,12 +165,10 @@ CRGB getColor(float highTemp) {
   // FastLED gradients crash the ESP8266 so we have to do it manually. There's probably a math function I'm too lazy to look up.
   // http://www.perbang.dk/rgbgradient/
 
-  if (highTemp <= 45) color = 0x0000FF;
-  else if (highTemp <= 50) color = 0x2A2AFF;
-  else if (highTemp <= 55) color = 0x5555FF;
-  else if (highTemp <= 60) color = 0x7F7FFF;
-  else if (highTemp <= 65) color = 0xAAAAFF;
-  else if (highTemp <= 70) color = 0xD4D4FF;
+  if (highTemp <= 55) color = 0x0000FF;
+  else if (highTemp <= 60) color = 0x3F3FFF;
+  else if (highTemp <= 65) color = 0x7F7FFF;
+  else if (highTemp <= 70) color = 0xBFBFFF;
   else if (highTemp <= 75) color = 0xFFFFFF;
   else if (highTemp <= 80) color = 0xFFCCCC;
   else if (highTemp <= 85) color = 0xFF9999;
