@@ -16,7 +16,7 @@ const char pass[] = "EDITME";    // your network password (use for WPA, or use a
 #define LIGHTSENSORPIN A0 //Ambient light sensor reading 
 #define DATA_PIN 5
 #define LED_TYPE WS2812
-#define COLOR_ORDER RGB
+#define COLOR_ORDER GRB
 #define MAX_BRIGHTNESS 20
 #define MIN_BRIGHTNESS 3
 #define MIN_LUX 8 // not really lux, we're using a raw sensor reading, maybe 15
