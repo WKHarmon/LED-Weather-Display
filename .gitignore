@@ -10,3 +10,4 @@ include/
 .vscode
 .travis.yml
 platformio.ini
+.DS_Store
