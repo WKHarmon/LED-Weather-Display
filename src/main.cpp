@@ -1,6 +1,9 @@
 #include <FastLED.h>
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_TSL2561_U.h>
+#include <Wire.h>
 using namespace std;
 
 const char ssid[] = "EDITME";        // your network SSID (name)
@@ -13,16 +16,17 @@ const char pass[] = "EDITME";    // your network password (use for WPA, or use a
 #define BRIGHTNESS_INTERVAL 5000 // interval at which to adjust brightness in ms
 
 #define FASTLED_ESP8266_RAW_PIN_ORDER
-#define LIGHTSENSORPIN A0 //Ambient light sensor reading 
-#define DATA_PIN 5
+#define DATA_PIN 14
 #define LED_TYPE WS2812
 #define COLOR_ORDER GRB
 #define MAX_BRIGHTNESS 20
-#define MIN_BRIGHTNESS 3
-#define MIN_LUX 8 // not really lux, we're using a raw sensor reading, maybe 15
-#define MAX_LUX 250
+#define MIN_BRIGHTNESS 5
+#define MIN_LUX 10 // not lux, just a luminosity reading
+#define MAX_LUX 80
 #define NUM_LEDS 128
 CRGB leds[NUM_LEDS];
+
+Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
 
 //range is 40 degrees blue, 70 degrees white, 90 degrees red; colors are indexed
 /*DEFINE_GRADIENT_PALETTE( temperature_gradient ) {
@@ -139,7 +143,15 @@ void setup() {
   while (!Serial) {
     // wait
   }
-  pinMode(LIGHTSENSORPIN, INPUT);
+
+  if(!tsl.begin()) {
+    /* There was a problem detecting the TSL2561 ... check your connections */
+    Serial.println("Ooops, no TSL2561 detected ... Check your wiring or I2C ADDR!");
+  } else {
+    tsl.setGain(TSL2561_GAIN_16X);
+    tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);
+  }
+
   FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(MAX_BRIGHTNESS);
   fill_gradient_RGB(leds, NUM_LEDS, CRGB::Blue, CRGB::Red);
@@ -190,6 +202,7 @@ void doLEDs(unsigned short int city) {
   if (conditions.indexOf("Partly Sunny") >= 0) image = weather_bkn;
   if (conditions.indexOf("Mostly Cloudy") >= 0) image = weather_bkn;
   if (conditions.indexOf("Smoke") >= 0) image = weather_mist;
+  if (conditions.indexOf("Fog") >= 0) image = weather_mist;
   if (conditions.indexOf("Haze") >= 0) image = weather_mist;
   if (conditions.indexOf("Rain") >= 0) image = weather_rain;
   if (conditions.indexOf("Showers") >= 0) image = weather_shower;
@@ -313,14 +326,22 @@ void decodeWeather(String JSONline) {
 
 void loop() {
   // set LED brightness
-  float reading;
+  uint16_t reading;
+  uint16_t ir;
   byte brightness;
+  //sensors_event_t event;
+  
+  tsl.getLuminosity(&reading, &ir);
+  Serial.print("Light: ");
+  Serial.println(reading);
 
-  reading = analogRead(LIGHTSENSORPIN);
+  /*if (event.light) {
+    reading = event.light;
 
-  Serial.print("Light reading: ");
-  Serial.print(reading);
-  Serial.print(" raw, ");
+    Serial.print("Light: ");
+    Serial.println(reading);
+  }
+  else Serial.println("Sensor reading error.");*/
 
   if (reading <= MIN_LUX) brightness = 0;
   else if (reading >= MAX_LUX) brightness = MAX_BRIGHTNESS;
