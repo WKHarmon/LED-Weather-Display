@@ -21,8 +21,8 @@ const char pass[] = "EDITME";    // your network password (use for WPA, or use a
 #define COLOR_ORDER GRB
 #define MAX_BRIGHTNESS 20
 #define MIN_BRIGHTNESS 5
-#define MIN_LUX 10 // not lux, just a luminosity reading
-#define MAX_LUX 80
+#define MIN_LUX 2 // not lux, just a luminosity reading
+#define MAX_LUX 50
 #define NUM_LEDS 128
 CRGB leds[NUM_LEDS];
 
@@ -324,39 +324,37 @@ void decodeWeather(String JSONline) {
   }
 }
 
-void loop() {
-  // set LED brightness
+void setBrightness() {
+ // set LED brightness
   uint16_t reading;
   uint16_t ir;
   byte brightness;
-  //sensors_event_t event;
   
   tsl.getLuminosity(&reading, &ir);
   Serial.print("Light: ");
-  Serial.println(reading);
-
-  /*if (event.light) {
-    reading = event.light;
-
-    Serial.print("Light: ");
-    Serial.println(reading);
-  }
-  else Serial.println("Sensor reading error.");*/
+  Serial.print(reading);
+  Serial.print(", ");
 
   if (reading <= MIN_LUX) brightness = 0;
   else if (reading >= MAX_LUX) brightness = MAX_BRIGHTNESS;
   else {
     // Percentage in lux range * brightness range + min brightness
-    float brightness_percent = (reading - MIN_LUX) / (MAX_LUX - MIN_LUX);
-    brightness = brightness_percent * (MAX_BRIGHTNESS - MIN_BRIGHTNESS) + MIN_BRIGHTNESS;
+    float brightness_percent = (float)(reading - MIN_LUX) / (float)(MAX_LUX - MIN_LUX);
+    Serial.print(brightness_percent * 100);
+    Serial.print("%, ");
+    brightness = (brightness_percent * (MAX_BRIGHTNESS - MIN_BRIGHTNESS)) + MIN_BRIGHTNESS;
   }
 
   Serial.print(brightness);
   Serial.println(" brightness");
   FastLED.setBrightness(brightness);
   FastLED.show();
+}
 
-    // Connect to WiFi. We always want a wifi connection for the ESP8266
+void loop() {
+  setBrightness();
+
+  // Connect to WiFi. We always want a wifi connection for the ESP8266
   if (WiFi.status() != WL_CONNECTED) {
     WiFi.mode(WIFI_STA);
     WiFi.hostname("Weather Clock " + WiFi.macAddress());
