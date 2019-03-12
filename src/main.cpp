@@ -21,7 +21,7 @@ const char pass[] = "EDITME";    // your network password (use for WPA, or use a
 #define COLOR_ORDER GRB
 #define MAX_BRIGHTNESS 20
 #define MIN_BRIGHTNESS 5
-#define MIN_LUX 2 // not lux, just a luminosity reading
+#define MIN_LUX 1 // not lux, just a luminosity reading
 #define MAX_LUX 50
 #define NUM_LEDS 128
 CRGB leds[NUM_LEDS];
