@@ -247,7 +247,7 @@ String getWeatherData(String url) {
     client.println(" HTTP/1.1");
     client.print("Host: ");
     client.println(HOST);
-    client.println("User-Agent: Weather Clock client - contact kyle@kyleharmon.com");
+    client.println("User-Agent: Another weather clock - contact kyle@kyleharmon.com");
     client.println("Accept: application/ld+json");
     client.println("Connection: close");
     client.println();
@@ -281,14 +281,14 @@ String getWeatherData(String url) {
           readingData = true;
         } else if (readingData) {
           payload += c;
-          if (currentLine.endsWith("}")) elementCount++;
+          if (currentLine.endsWith("\"number\": 4")) { // Stop after we have 3 elements
+            client.stop();
+            payload.remove(payload.lastIndexOf(","));
+            payload += "]}";
+            Serial.print(payload);
+            return payload;
+          }
         }
-        if (elementCount >= 3) {
-          client.stop();
-          payload += "]}";
-          return payload;
-        }; // stop after we have three elements
-
         t = millis(); // Reset timeout clock
       } else if ((millis() - t) >= (READ_TIMEOUT * 1000)) {
         Serial.println("---Timeout---");
